@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  <link rel="stylesheet" crossorigin href="/assets/index-p9d8RMPW.css">
+</head>
+<body>
+    <div class="cointner h-[100%] w-[100%] flex flex-col items-center bg-blue-400 ">
+        <div class="head h-[10vh] w-[100vw]  bg-black flex justify-between items-center pl-3 pr-3">
+<div class="head"><h1 class="font-semibold text-cyan-50">MOVIE-APP</h1></div>
+<form  id="form" class="flex"> <div class="serch"><input type="text " placeholder="search movies " class="w-52 h-7 rounded-3xl p-3 border-0 outline-0" id="input"></div><button class="text-black rounded-xl  -ml-6 border-0 outline-none bg-slate-100">click</button></form>
+
+        </div>
+
+
+        <div class="main mt-3  w-[90vw] h-[100%] mb-5 bg-blue-600">
+            <div class="main2  w-[90vw] h-[100%] grid grid-cols-3 gap-2 bg-blue-600" >
+
+
+            </div>
+
+        </div>
+    </div>
+     
+</body>
+ <script>
+    
+const SEARCHAPI =
+    "https://api.themoviedb.org/3/search/movie?&api_key=04c35731a5ee918f014970082a0088b1&query=";
+
+let inputField=document.getElementById("input")
+let form=document.getElementById("form")
+let main2=document.querySelector(".main2")
+
+let showMovies= async()=>{
+    const APIURL ="https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1";
+    let response=await fetch(APIURL)
+    let data= await response.json();
+     
+     let data2=data.results
+     main2.innerHTML=""
+data2.forEach(element => {
+    let img=document.createElement("img")
+    let photo=document.createElement("div")
+    let span1=document.createElement("span")
+    let span2=document.createElement("span")
+    photo.classList.add("flex","flex-col","bg-black")
+    main2.classList.add("bg-blue-600")
+    img.src= "https://image.tmdb.org/t/p/w500"+element.poster_path
+    span2.textContent=element.title
+    span2.classList.add("text-center","text-white")
+    span1.appendChild(img)
+    photo.appendChild(span1)
+    photo.appendChild(span2)
+    main2.appendChild(photo)
+    
+});
+}
+let search=async()=>{
+    let inputField=document.getElementById("input").value
+    const url =`https://api.themoviedb.org/3/search/movie?&api_key=04c35731a5ee918f014970082a0088b1&query=${inputField}`;
+
+let response=await fetch(url)
+let data= await response.json()
+console.log(data)
+let data2=data.results
+     main2.innerHTML=""
+data2.forEach(element => {
+    let img=document.createElement("img")
+    let photo=document.createElement("div")
+    let span1=document.createElement("span")
+    let span2=document.createElement("span")
+    photo.classList.add("flex","flex-col","bg-black")
+    main2.classList.add("bg-blue-600")
+    img.src= "https://image.tmdb.org/t/p/w500"+element.poster_path
+    span2.textContent=element.title
+    span2.classList.add("text-center","text-white")
+    span1.appendChild(img)
+    photo.appendChild(span1)
+    photo.appendChild(span2)
+    main2.appendChild(photo)
+    
+});
+    
+}
+form.addEventListener("submit",(e)=>{
+    e.preventDefault()
+    search()
+})
+ search()
+showMovies()
+ 
+ </script>
+</html>
